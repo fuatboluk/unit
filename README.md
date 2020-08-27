@@ -11,18 +11,18 @@ By running all the shell files added to the /scripts directory with their argume
 # Compiling and Running
 
 * Run the `make` command in the source directory.
-  * When the compilation is completed, a binary file with the name of unit will be created in the directory you are in. Copy this file into the `/usr/bin` directory.
-  * Create the `/scripts` directory on the root directory and create all the shell functions you want to add to this directory.
+* When the compilation is completed, a binary file with the name of unit will be created in the directory you are in. Copy this file into the `/usr/bin` directory.
+* Create the `/scripts` directory on the root directory and create all the shell functions you want to add to this directory.
 
 -----------------------------------------------------------------------------
+
+![Alt text](https://gitlab.com/fuatboluk/unit/raw/master/unit-example1.png "Unit Example1 Screenshot")
 
 ## Turkish
 
 unit, işletim sistemindeki yola bağlı tüm çalıştırılabilir programları çalıştıran ve kullanıcı izinlerine bağlı olarak kullanıcı tarafından eklenen komut dosyalarını tek bir komut altında çalıştıran birleştirici bir komut satırı arayüzüdür.
 
 /scripts dizinine eklenen tüm kabuk dosyalarını, argümanları ile aynı programa dahil edilmiş gibi çalıştırarak, programı daha işlevsel hale getirmenize ve birçok özelliği gruplamanıza olanak tanır.
-
-![Alt text](https://gitlab.com/fuatboluk/unit/raw/master/unit-example1.png "Unit Example1 Screenshot")
 
  # Derleme ve Çalıştırma
 
