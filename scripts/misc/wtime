@@ -1,0 +1,26 @@
+
+function wtime()
+{
+    if [ ! -z "$1" ]
+    then
+        if [ "$1" == "show" ]
+        then
+            time=$(curl -s https://fuatboluk.com.tr/static/wtime.php)
+            echo "$time"
+        fi
+    
+        if [ "$1" == "set" ]
+        then
+            if [ $(id -u) != 0 ]
+            then
+                echo -e "$YLW Warning:$NRM Only root user can run this function!"
+                exit 1
+            fi
+            
+            time=$(curl -s https://fuatboluk.com.tr/static/wtime.php)
+            timedatectl set-time "$time"
+        fi
+    else
+        echo -e "$YLW Usage:$NRM $PRG wtime <show|set>"
+    fi
+}
