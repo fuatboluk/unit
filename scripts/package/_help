@@ -1,0 +1,5 @@
+
+function _help()
+{
+    echo -e "$YLW Usage:$NRM $PRG package help"
+}
