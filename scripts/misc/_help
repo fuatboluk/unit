@@ -1,0 +1,9 @@
+# _help files are files containing information and usage examples of scripts in the unit. 
+# Each directory is a unit and there must be an _help file that contains the help of the functions in it!
+
+# example help file content
+
+function _help()
+{
+    echo -e "$YLW Usage:$NRM $PRG misc help"
+}
