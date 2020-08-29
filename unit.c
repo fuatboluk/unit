@@ -22,7 +22,6 @@
 
 static char * usage();
 static char * list(char * name);
-static char * command(char * cmd, char * arg);
 static char * script_help(char * dir,char * scr);
 static char * script(char * dir, char * scr, char * arg);
 
@@ -30,13 +29,9 @@ static char * script(char * dir, char * scr, char * arg);
 static char * usage()
 {
     printf("\n");
-    printf("The unit is a unifying command line interface that runs all executable\n");
-    printf("programs attached to the path on the operating system and user-added scripts\n");
-    printf("under a single command, based on user permissions.\n");
-    printf("\n");
-    printf("By running all the shell files added to the /scripts directory with their arguments\n");
-    printf("as if they were included in the same program, it allows you to make the program more\n");
-    printf("functional and group many properties.\n");
+    printf("The unit is a unifying interface that allows you to make the program more functional\n");
+    printf("and group many properties by running all the shell files added by the user to the /scripts\n");
+    printf("directory as if they were included in the same program with their arguments.\n");
     printf("\n");
     printf("%s Built-in Scripts Variables:%s\n", YLW, NRM);
     printf("\t$PRG\t\tprogram name (unit)\n");
@@ -134,14 +129,6 @@ static char * list(char * name)
 }
 
 
-static char * command(char * cmd, char * arg)
-{
-    char out[MAXLEN];
-    sprintf(out, "%s %s", cmd, arg);
-    system(out);
-}
-
-
 static char * script_help(char * dir, char * scr)
 {
     char cmd[MAXLEN];
@@ -215,7 +202,7 @@ int main(int argc, char * argv[])
             else
             {
                 stat(exists, &st);
-                
+
                 if (S_ISDIR(st.st_mode) == 1)
                 {
                     if (!strcmp(argv[2], dir->d_name))
@@ -239,22 +226,6 @@ int main(int argc, char * argv[])
         }
 
         closedir(dr);
-    }
-    else
-    {
-        char args[MAXLEN];
-
-        for (int i = 2; i < argc; i++)
-        {
-            strcat(args, argv[i]);
-
-            if (i != argc - 1)
-            {
-                strcat(args, " ");
-            }
-        }
-
-        command(argv[1], args);
     }
 
     return 0;
