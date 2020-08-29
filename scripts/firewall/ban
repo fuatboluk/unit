@@ -1,0 +1,38 @@
+
+function ban()
+{
+    if [ $(id -u) != 0 ]
+    then
+        echo -e "$RED Error:$NRM Only root user can run this function!"
+        exit 1
+    fi
+
+    if [ ! -z "$1" ]
+    then
+        zone=$(firewall-cmd --get-default-zone)
+
+        if [ ! -z "$zone" ]
+        then
+            ban=$(firewall-cmd --zone=$zone --permanent --add-rich-rule="rule family=ipv4 source address=$1/32 reject")
+            
+            if [ "$ban" == "success" ]
+            then
+                echo "$1/32 ip block baned!"
+            else
+                echo "$1/32 ip block not baned!"
+            fi
+            
+            reload=$(firewall-cmd --reload)
+            
+            if [ "$reload" == "success" ]
+            then
+                echo "firewall reloaded!"
+            else
+                echo "firewall not reloaded!"
+            fi
+        fi
+    else
+        echo -e "$YLW Usage:$NRM $PRG firewall ban <ipaddr>"
+    fi
+}
+
