@@ -35,7 +35,7 @@ You can add as many group(unit) and function files to the unit as you want. If y
 
 ![Alt text](https://gitlab.com/fuatboluk/unit/raw/master/unit-example1.png "Unit Example1 Screenshot")
 
-## Turkish
+## Türkçe
 
 Unit, kullanıcı tarafından eklenen tüm kabuk dosyalarını argümanları ile aynı programa dahil edilmiş gibi çalıştırarak programı daha işlevsel hale getirmenize ve birçok özelliği gruplamanıza olanak tanıyan birleştirici bir arabirimdir.
 
