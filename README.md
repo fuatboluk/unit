@@ -20,8 +20,7 @@ You can examine the sample function files in the scripts directory in the projec
 
 Example usage syntax:
 
-program_name group function parameters
-----------------------------------------
+* program_name > group > function > parameters
 
 unit firewall add_port 2834/tcp
 
@@ -53,8 +52,7 @@ Projedeki scripts dizini içerisindeki örnek fonksiyon dosyalarını inceleyip,
 
 Örnek kullanım söz dizimi:
 
-program_adı grup fonksiyon parametreler
-----------------------------------------
+* program_adı > grup > fonksiyon > parametreler
 
 unit firewall add_port 2834/tcp
 
