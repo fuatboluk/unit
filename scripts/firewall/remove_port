@@ -1,0 +1,38 @@
+
+function remove_port()
+{
+    if [ $(id -u) != 0 ]
+    then
+        echo -e "$RED Error:$NRM Only root user can run this function!"
+        exit 1
+    fi
+
+    if [ ! -z "$1" ]
+    then
+        zone=$(firewall-cmd --get-default-zone)
+
+        if [ ! -z "$zone" ]
+        then
+            port=$(firewall-cmd --zone=$zone --permanent --remove-port=$1)
+            
+            if [ "$port" == "success" ]
+            then
+                echo "$1 port removed!"
+            else
+                echo "$1 port not removed!"
+            fi
+            
+            reload=$(firewall-cmd --reload)
+            
+            if [ "$reload" == "success" ]
+            then
+                echo "firewall reloaded!"
+            else
+                echo "firewall not reloaded!"
+            fi
+        fi
+    else
+        echo -e "$YLW Usage:$NRM $PRG firewall remove_port <port|port-port/protocol>"
+    fi
+}
+
