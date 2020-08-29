@@ -3,7 +3,7 @@ function rpmfind()
 {
     if [ $(id -u) == 0 ]
     then
-        echo -e "$YLW Warning:$NRM The root user cannot run this function!"
+        echo -e "$RED Error:$NRM The root user cannot run this function!"
         exit 1
     fi
     
