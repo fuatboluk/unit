@@ -20,28 +20,11 @@
 #define SCR "/scripts"
 
 
-static char * script(char * scr, char * arg);
-static char * command(char * cmd, char * arg);
 static char * usage();
-static char * list();
-
-
-static char * script(char * scr, char * arg)
-{
-    char cmd[MAXLEN];
-    sprintf(cmd, "PRG=\"%s\"; NRM=\"%s\";"
-                 "RED=\"%s\"; YLW=\"%s\"; WHT=\"%s\"; source %s/%s; %s", 
-                 PRG, NRM, RED, YLW, WHT, SCR, scr, arg);
-    system(cmd);
-}
-
-
-static char * command(char * cmd, char * arg)
-{
-    char out[MAXLEN];
-    sprintf(out, "%s %s", cmd, arg);
-    system(out);
-}
+static char * list(char * name);
+static char * command(char * cmd, char * arg);
+static char * script_help(char * dir,char * scr);
+static char * script(char * dir, char * scr, char * arg);
 
 
 static char * usage()
@@ -64,89 +47,209 @@ static char * usage()
     printf("\n");
     printf("%s Options:%s\n", YLW, NRM);
     printf("\t-h | --help\tshow this help message\n");
-    printf("\t-l | --list\tunit scripts list\n");
+    printf("\t-l | --list\tunit script list with unit list or <unit_name>\n");
     printf("\n");
 }
 
 
-static char * list()
+static char * list(char * name)
 {
-    printf("\n");
-    printf("%s Unit Scripts List:%s\n", YLW, NRM);
-
+    struct stat st;
     struct dirent * dir;
-    DIR * dr = opendir(SCR);
+    
+    if (!strcmp(name, "#"))
+    {
+        DIR * dr = opendir(SCR);
 
-    if (dr == NULL) {
-        printf("%s Error:%s Could not open %s directory!\n", RED, NRM, SCR);
-        exit(EXIT_SUCCESS);
-    }
-
-    while ((dir = readdir(dr)) != NULL) {
-        if (!strcmp(dir->d_name, ".") || !strcmp(dir->d_name, "..")) {
-            continue;
-        } else {
-            printf("\t%s\n", dir->d_name);
+        if (dr == NULL)
+        {
+            printf("%s Error:%s Could not open %s directory!\n", RED, NRM, SCR);
+            closedir(dr);
+            exit(EXIT_SUCCESS);
         }
-    }
 
-    printf("\n");
+        printf("\n");
+        printf("%s Unit List:%s\n", YLW, NRM);
+        
+        while ((dir = readdir(dr)) != NULL)
+        {
+            if (!strcmp(dir->d_name, ".") || !strcmp(dir->d_name, ".."))
+            {
+                continue;
+            }
+            else
+            {
+                char exists[256];
+                sprintf(exists, "%s/%s", SCR, dir->d_name);
+
+                stat(exists, &st);
+                
+                if (S_ISDIR(st.st_mode) == 1)
+                {
+                    printf("\t%s\n", dir->d_name);
+                }
+            }
+        }
+        
+        printf("\n");
+        closedir(dr);
+    }
+    else
+    {
+        char exists[256];
+        sprintf(exists, "%s/%s", SCR, name);
+        
+        DIR * dr = opendir(exists);
+
+        if (dr == NULL)
+        {
+            printf("%s Error:%s Could not open %s directory!\n", RED, NRM, exists);
+            closedir(dr);
+            exit(EXIT_SUCCESS);
+        }
+
+        printf("\n");
+        printf("%s Unit Script List:%s\n", YLW, NRM);
+        
+        while ((dir = readdir(dr)) != NULL)
+        {
+            if (!strcmp(dir->d_name, ".") || !strcmp(dir->d_name, "..") || !strcmp(dir->d_name, "_help"))
+            {
+                continue;
+            }
+            else
+            {
+                stat(exists, &st);
+                
+                if (S_ISDIR(st.st_mode) == 1)
+                {
+                    printf("\t%s\n", dir->d_name);
+                }
+            }
+        }
+
+        printf("\n");
+        closedir(dr);
+    }
+}
+
+
+static char * command(char * cmd, char * arg)
+{
+    char out[MAXLEN];
+    sprintf(out, "%s %s", cmd, arg);
+    system(out);
+}
+
+
+static char * script_help(char * dir, char * scr)
+{
+    char cmd[MAXLEN];
+    sprintf(cmd, "PRG=\"%s\"; NRM=\"%s\";"
+                 "RED=\"%s\"; YLW=\"%s\"; WHT=\"%s\"; source %s/%s/_%s; _help", 
+                 PRG, NRM, RED, YLW, WHT, SCR, dir, scr);
+    system(cmd);
+}
+
+
+static char * script(char * dir, char * scr, char * arg)
+{
+    char cmd[MAXLEN];
+    sprintf(cmd, "PRG=\"%s\"; NRM=\"%s\";"
+                 "RED=\"%s\"; YLW=\"%s\"; WHT=\"%s\"; source %s/%s/%s; %s", 
+                 PRG, NRM, RED, YLW, WHT, SCR, dir, scr, arg);
+    system(cmd);
 }
 
 
 int main(int argc, char * argv[])
 {
-    if (argc < 2 || !strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {
+    if (argc < 2 || !strcmp(argv[1], "-h") || !strcmp(argv[1], "--help"))
+    {
         usage();
         exit(EXIT_SUCCESS);
     }
 
-    if (argc < 2 || !strcmp(argv[1], "-l") || !strcmp(argv[1], "--list")) {
-        list();
+    if (argc < 2 || !strcmp(argv[1], "-l") || !strcmp(argv[1], "--list"))
+    {
+        if (argv[2] == NULL)
+        {
+            list("#");
+            exit(EXIT_SUCCESS);
+        }
+        else
+        {
+            list(argv[2]);
+            exit(EXIT_SUCCESS);
+        }
+    }
+
+    if (argc < 3 || !strcmp(argv[2], "help") || argv[2] == NULL)
+    {
+        script_help(argv[1], "help");
         exit(EXIT_SUCCESS);
     }
 
-    char exists[256];
-    sprintf(exists, "%s/%s", SCR, argv[1]);
-    struct stat st;
-        
-    if (stat(exists, &st) == 0) {
+    if (argv[2] != NULL || argv[2] != "help")
+    {
+        struct stat st;
         struct dirent * dir;
-        DIR * dr = opendir(SCR);
 
-        if (dr == NULL) {
-            printf("%s Error:%s Could not open %s directory!\n", RED, NRM, SCR);
+        char exists[256];
+        sprintf(exists, "%s/%s", SCR, argv[1]);
+
+        DIR * dr = opendir(exists);
+
+        if (dr == NULL)
+        {
+            printf("%s Error:%s Could not open %s directory!\n", RED, NRM, exists);
             exit(EXIT_SUCCESS);
         }
 
-        while ((dir = readdir(dr)) != NULL) {
-            if (!strcmp(dir->d_name, ".") || !strcmp(dir->d_name, "..")) {
+        while ((dir = readdir(dr)) != NULL)
+        {
+            if (!strcmp(dir->d_name, ".") || !strcmp(dir->d_name, "..") || !strcmp(dir->d_name, "_help"))
+            {
                 continue;
-            } else {
-                if (!strcmp(argv[1], dir->d_name)) {
-                    char args[MAXLEN];
+            }
+            else
+            {
+                stat(exists, &st);
+                
+                if (S_ISDIR(st.st_mode) == 1)
+                {
+                    if (!strcmp(argv[2], dir->d_name))
+                    {
+                        char args[MAXLEN];
 
-                    for (int i = 1; i < argc; i++) {
-                        strcat(args, argv[i]);
+                        for (int i = 2; i < argc; i++)
+                        {
+                            strcat(args, argv[i]);
 
-                        if (i != argc - 1) {
-                            strcat(args, " ");
+                            if (i != argc - 1)
+                            {
+                                strcat(args, " ");
+                            }
                         }
-                    }
 
-                    script(argv[1], args);
+                        script(argv[1], argv[2], args);
+                    }
                 }
             }
         }
 
         closedir(dr);
-    } else {
+    }
+    else
+    {
         char args[MAXLEN];
 
-        for (int i = 2; i < argc; i++) {
+        for (int i = 2; i < argc; i++)
+        {
             strcat(args, argv[i]);
 
-            if (i != argc - 1) {
+            if (i != argc - 1)
+            {
                 strcat(args, " ");
             }
         }
