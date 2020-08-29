@@ -23,7 +23,7 @@ Example usage syntax:
 program_name group function parameters
 ----------------------------------------
 
-unit firewall addport 2834/tcp
+unit firewall add_port 2834/tcp
 
 or
 
@@ -56,7 +56,7 @@ Projedeki scripts dizini içerisindeki örnek fonksiyon dosyalarını inceleyip,
 program_adı grup fonksiyon parametreler
 ----------------------------------------
 
-unit firewall addport 2834/tcp
+unit firewall add_port 2834/tcp
 
 veya
 
