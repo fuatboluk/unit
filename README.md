@@ -60,4 +60,4 @@ veya
 
 unit wtime show
 
-unit'e istediğiniz kadar grup(ünite) ve fonksiyon dosyası ekleyebilirsiniz. Sürekli kullandığınız kabuk işlemlerini, birden fazla satırda herzaman yazmak yerine, birkez unit fonksiyonu olarak yazarsanız konuşma akıcılığında belirlediğiniz basit parametreler ile kolayca çalıştırıp işlmleri kolaylaştırabilirsiniz.
+unit'e istediğiniz kadar grup(ünite) ve fonksiyon dosyası ekleyebilirsiniz. Sürekli kullandığınız kabuk işlemlerini, birden fazla satırda herzaman yazmak yerine, birkez unit fonksiyonu olarak yazarsanız konuşma akıcılığında belirlediğiniz basit parametreler ile kolayca çalıştırıp işlemleri kolaylaştırabilirsiniz.
