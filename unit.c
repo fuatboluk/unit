@@ -170,6 +170,20 @@ int main(int argc, char * argv[])
             exit(EXIT_SUCCESS);
         }
     }
+    
+    if (argc < 3 || !strcmp(argv[2], "-l") || !strcmp(argv[2], "--list"))
+    {
+        if (argv[2] == NULL)
+        {
+            script_help(argv[1], "help");
+            exit(EXIT_SUCCESS);
+        }
+        else
+        {
+            list(argv[1]);
+            exit(EXIT_SUCCESS);
+        }
+    }
 
     if (argc < 3 || !strcmp(argv[2], "help") || argv[2] == NULL)
     {
