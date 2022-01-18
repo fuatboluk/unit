@@ -1,7 +1,0 @@
-
-function _help()
-{
-    echo -e "$YLW Unit Name   :$NRM Package"
-    echo -e "$YLW Description :$NRM This unit contains shell functions for building system packages."
-    echo -e "Type \"unit function help\" for function help."
-}
