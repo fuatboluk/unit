@@ -1,0 +1,83 @@
+
+function add()
+{
+    if [ $(id -u) != 0 ]
+    then
+        echo -e "$RED Error:$NRM Only root user can run this function!"
+        exit 1
+    fi
+
+    if [ ! -z "$1" ]
+    then
+        zone=$(firewall-cmd --get-default-zone)
+
+        if [ ! -z "$zone" ]
+        then
+            if [ "$1" == "port" ]
+            then
+                port=$(firewall-cmd --zone=$zone --permanent --add-port=$2)
+                
+                if [ "$port" == "success" ]
+                then
+                    echo "$2 port added!"
+                else
+                    echo "$2 port not added!"
+                fi
+            
+                reload=$(firewall-cmd --reload)
+            
+                if [ "$reload" == "success" ]
+                then
+                    echo "firewall reloaded!"
+                else
+                    echo "firewall not reloaded!"
+                fi
+            fi
+
+            if [ "$1" == "service" ]
+            then
+                service=$(firewall-cmd --zone=$zone --permanent --add-service=$2)
+            
+                if [ "$service" == "success" ]
+                then
+                    echo "$2 service added!"
+                else
+                    echo "$2 service not added!"
+                fi
+            
+                reload=$(firewall-cmd --reload)
+            
+                if [ "$reload" == "success" ]
+                then
+                    echo "firewall reloaded!"
+                else
+                    echo "firewall not reloaded!"
+                fi
+            fi
+
+            if [ "$1" == "rule" ]
+            then
+                rule=$(firewall-cmd --zone=$zone --permanent --add-rich-rule="$2")
+            
+                if [ "$ban" == "success" ]
+                then
+                    echo "\"$2\" rule added!"
+                else
+                    echo "\"$2\" rule not added!"
+                fi
+            
+                reload=$(firewall-cmd --reload)
+            
+                if [ "$reload" == "success" ]
+                then
+                    echo "firewall reloaded!"
+                else
+                    echo "firewall not reloaded!"
+                fi
+            fi
+        fi
+    else
+        echo -e "$YLW Usage:$NRM $PRG firewall add <port|service|rule> <value>"
+    fi
+}
+

@@ -1,0 +1,8 @@
+
+function _help()
+{
+    echo -e "$YLW Unit Name   :$NRM Firewall"
+    echo -e "$YLW Description :$NRM This unit includes shell functions that facilitate firewall management."
+    echo -e "               Type \"unit function help\" for function help."
+}
+

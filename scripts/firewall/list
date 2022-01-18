@@ -1,0 +1,62 @@
+
+function list()
+{
+    if [ $(id -u) != 0 ]
+    then
+        echo -e "$RED Error:$NRM Only root user can run this function!"
+        exit 1
+    fi
+
+    if [ ! -z "$1" ]
+    then
+        zone=$(firewall-cmd --get-default-zone)
+
+        if [ ! -z "$zone" ]
+        then
+            if [ "$1" == "port" ]
+            then
+                port=$(firewall-cmd --zone=$zone --list-ports)
+                
+                if [ ! -z "$port" ]
+                then
+                    echo "$port"
+                else
+                    echo "$YLW Warning:$NRM No port has been added to the list yet!"
+                fi
+            fi
+
+            if [ "$1" == "service" ]
+            then
+                service=$(firewall-cmd --zone=$zone --list-services)
+                
+                if [ ! -z "$service" ]
+                then
+                    echo "$service"
+                else
+                    echo "$YLW Warning:$NRM No service has been added to the list yet!"
+                fi
+            fi
+
+            if [ "$1" == "rule" ]
+            then
+                rule=$(firewall-cmd --zone=$zone --list-rich-rules)
+                
+                if [ ! -z "$rule" ]
+                then
+                    echo "$rule"
+                else
+                    echo "$YLW Warning:$NRM No rule has been added to the list yet!"
+                fi
+            fi
+
+            if [ "$1" == "all" ]
+            then
+                all=$(firewall-cmd --zone=$zone --list-all)
+                echo "$all"
+            fi
+        fi
+    else
+        echo -e "$YLW Usage:$NRM $PRG firewall list <port|service|rule|all>"
+    fi
+}
+
