@@ -1,8 +1,0 @@
-
-function _help()
-{
-    echo -e "$YLW Unit Name   :$NRM Miscellaneous"
-    echo -e "$YLW Description :$NRM This unit has mixed shell functions that perform miscellaneous functions."
-    echo -e "Type \"unit function help\" for function help."
-}
-
