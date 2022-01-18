@@ -9,8 +9,7 @@ The unit is a unifying interface that allows you to make the program more functi
 # Compiling and Running
 
 * Run the `make` command in the source directory.
-* When the compilation is completed, a binary file with the name of unit will be created in the directory you are in. Copy this file into the `/usr/bin` directory.
-* Move the scripts folder in the project to the root directory and create your own units in the same structure.
+* When the compilation is complete, a binary file named unit will be created in the directory you are in. Then complete the installation of the software in the root directory with the `sudo make install` command.
 
 # Use of
 
@@ -41,8 +40,7 @@ Unit, kullanıcı tarafından eklenen tüm kabuk dosyalarını argümanları ile
  # Derleme ve Çalıştırma
 
  * Kaynak dizin içerisinde `make` komutunu koşun.
- * Derleme tamamlanınca bulunduğunuz dizinde unit adı ile bir ikili dosya oluşacaktır. Bu dosya'yı `/usr/bin` dizini içine kopyalayın.
- * Proje içerisindeki scripts klasörünü kök dizine taşıyın ve aynı yapıda kendi ünitelerinizi oluşturun.
+ * Derleme tamamlandığında bulunduğunuz dizinde unit isimli bir ikili dosya oluşacaktır. Ardından `sudo make install` komutu ile yazılımın kök dizine kurulumunu tamamlayın. 
 
  # Kullanımı
 
