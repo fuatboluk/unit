@@ -21,11 +21,7 @@ Example usage syntax:
 
 * program_name > group > function > parameters
 
-unit firewall add_port 2834/tcp
-
-or
-
-unit wtime show
+unit firewall add port 2834/tcp
 
 You can add as many group (unit) and function files to the unit as you want. If you write the shell operations that you use constantly as a unit function instead of always writing in more than one line, you can easily run them with simple parameters you specify in speech fluency and make the operations easier.
 
@@ -52,10 +48,6 @@ Projedeki scripts dizini içerisindeki örnek fonksiyon dosyalarını inceleyip,
 
 * program_adı > grup > fonksiyon > parametreler
 
-unit firewall add_port 2834/tcp
-
-veya
-
-unit wtime show
+unit firewall add port 2834/tcp
 
 unit'e istediğiniz kadar grup(ünite) ve fonksiyon dosyası ekleyebilirsiniz. Sürekli kullandığınız kabuk işlemlerini, birden fazla satırda herzaman yazmak yerine, birkez unit fonksiyonu olarak yazarsanız konuşma akıcılığında belirlediğiniz basit parametreler ile kolayca çalıştırıp işlemleri kolaylaştırabilirsiniz.
